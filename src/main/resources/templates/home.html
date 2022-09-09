@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+ 
+<head th:insert="~{fragments::head}"></head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- main wrapper -->
+    <!-- ============================================================== -->
+    <div class="dashboard-main-wrapper">
+       <div th:insert="fragments::headbar"></div>
+        <div th:insert="fragments::sidebar"></div>
+        <!-- ============================================================== -->
+        <!-- wrapper  -->
+        <!-- ============================================================== -->
+        <div class="dashboard-wrapper">
+            <div class="dashboard-ecommerce">
+                <div class="container-fluid dashboard-content ">
+                    <div class="ecommerce-widget">
+                        <div class="row">
+                            <table id="gradeTable"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           <div th:insert="fragments::footer"></div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- end wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- end main wrapper  -->
+    <!-- ============================================================== -->
+
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel"> </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="num">学号</label>
+                        <input id="num" type="text" class="form-control" disabled />
+                    </div>
+                    <div class="form-group">
+                        <label for="name">姓名</label>
+                        <input id="name" type="text" class="form-control" disabled />
+                    </div>
+                    <div class="form-group">
+                        <label for="name">数学</label>
+                        <input id="math" type="text" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Java</label>
+                        <input id="java" type="text" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="name">英语</label>
+                        <input id="english" type="text" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="name">体育</label>
+                        <input id="pe" type="text" class="form-control" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="editInfo()">修改</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    /*=================表格显示=======================*/
+    var columns = [{
+        field: 'num',
+        title: '学号',
+        sortable:true //设置ID列可以排序
+    }, {
+        field: 'name',
+        title: '姓名',
+        sortable:false //设置产品名称列可以排序
+    }, {
+        field: 'math',
+        title: '数学',
+        sortable:true //设置库存列可以排序
+    }, {
+        field: 'java',
+        title: 'Java',
+        sortable:true //设置库存列可以排序
+    }, {
+        field: 'english',
+        title: '英语',
+        sortable:true //设置库存列可以排序
+    }, {
+        field: 'pe',
+        title: '体育',
+        sortable:true //设置库存列可以排序
+    }, {
+        field: 'total',
+        title: '总成绩',
+        sortable:true //设置库存列可以排序
+    }, {
+        field: 'average',
+        title: '平均成绩',
+        sortable:true //设置库存列可以排序
+    },{
+        field: 'operate',
+        title: '操作',
+        sortable:false, //设置库存列可以排序
+        events: {
+            'click #edit': function (e, value, row, index) {
+                $('#num').val(row.num);
+                $('#name').val(row.name);
+                $('#math').val(row.math);
+                $('#java').val(row.java);
+                $('#english').val(row.english);
+                $('#pe').val(row.pe);
+
+            },
+            'click #delete': function (e, value, row, index) {
+                deleteInfo(row.num);
+            }
+        },
+        formatter: function (value, row, index) {
+            var result = "";
+            result += '<button id="edit" class="btn btn-info" data-toggle="modal" data-target="#editModal">更改</button>';
+            result += '<button id="delete" class="btn btn-danger" style="margin-left:10px;">删除</button>';
+            return result;
+        },
+    },];
+    //显示数据
+    $.ajax({
+        url: "stuGrades",
+        type: "get",
+        success: function (result) {
+            var data = result.extend.stuGrades
+            console.log(data)
+            $('#gradeTable').bootstrapTable({
+                columns: columns,
+                data: data,
+            });
+        }
+    })
+    //bootstrap table初始化数据
+    /*=========================表格显示 end==============================*/
+    /*============================增改逻辑==================================*/
+    // 修改信息
+    function editInfo() {
+        $.ajax({
+            type: 'PUT',
+            url: 'stuGrade',
+            dataType: 'json',
+            data: {
+                num: $('#num').val(),
+                name: $('#name').val(),
+                math: $('#math').val(),
+                java: $('#java').val(),
+                english: $('#english').val(),
+                pe: $('#pe').val()
+             },
+            success: function (result) {
+                if (result.code === 200) {
+                   location.reload();
+                }
+                else {
+                    alert('修改失败');
+                }
+            }
+        })
+    }
+    // 删除信息
+    function deleteInfo(num) {
+        $.ajax({
+            type: 'DELETE',
+            url: 'stuGrade/'+ num,
+            success: function (result) {
+                if (result.code === 200) {
+                    location.reload();
+                }
+                else {
+                    alert('删除失败');
+                }
+            }
+        })
+    }
+    /*============================增改逻辑end==================================*/
+
+</script>
+ 
+</html>
