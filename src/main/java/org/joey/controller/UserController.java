@@ -37,4 +37,15 @@ public class UserController {
             return Msg.success();
         }
     }
+
+    @GetMapping("/signOut")
+    @ResponseBody
+    public Msg signOut(HttpSession session) {
+        session.removeAttribute("username");
+
+        if(session.getAttribute("username") == null) {
+            return Msg.success();
+        }
+        return Msg.fail();
+    }
 }

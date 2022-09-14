@@ -2,6 +2,7 @@ package org.joey.mapper;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.joey.pojo.Grade;
 import org.joey.pojo.Student;
 import org.joey.pojo.StudentExample;
 import org.springframework.stereotype.Component;
@@ -95,4 +96,6 @@ public interface StudentMapper {
      * @mbg.generated Wed Sep 07 10:28:19 CST 2022
      */
     int updateByPrimaryKey(Student row);
+
+    List<Student> selectStudentsDoNotHaveGrade();
 }

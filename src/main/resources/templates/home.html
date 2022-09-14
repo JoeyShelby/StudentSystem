@@ -25,9 +25,6 @@
             </div>
            <div th:insert="fragments::footer"></div>
         </div>
-        <!-- ============================================================== -->
-        <!-- end wrapper  -->
-        <!-- ============================================================== -->
     </div>
     <!-- ============================================================== -->
     <!-- end main wrapper  -->
@@ -139,7 +136,6 @@
         type: "get",
         success: function (result) {
             var data = result.extend.stuGrades
-            console.log(data)
             $('#gradeTable').bootstrapTable({
                 columns: columns,
                 data: data,

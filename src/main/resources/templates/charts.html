@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments::head}"></head>
+<script src="/js/echarts.min.js"></script>
+<body>
+<div class="dashboard-main-wrapper">
+    <div th:insert="fragments::headbar"></div>
+    <div th:insert="fragments::sidebar"></div>
+    <div class="dashboard-wrapper">
+        <div class="dashboard-ecommerce">
+            <div class="container-fluid dashboard-content ">
+                <div class="ecommerce-widget">
+                    <div class="row">
+
+                        <!-- 柱状图-->
+                        <div id="histogram" style="width: 600px;height:400px;"></div>
+                        <div id="pieChart" style="width: 300px;height:300px;"></div>
+
+                        <!-- 分页导航 -->
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item"><a class="page-link" href="javascript:void (0);" onclick="showChart(0)">前一位</a></li>
+                                <li class="page-item"><a class="page-link" href="javascript:void (0);" id="curNum" index="0" nums=[]></a></li>
+                                <li class="page-item"><a class="page-link" href="javascript:void (0);" onclick="showChart(1)">后一位</a></li>
+                            </ul>
+                        </nav>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:insert="fragments::footer"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $.ajaxSetup({async: false});
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('histogram'));
+    var myChart2 = echarts.init(document.getElementById('pieChart'));
+
+    var nums = [];
+    // 获得所有有成绩的学生的学号
+    $.ajax({
+        url: "stuGradeNums",
+        type: "get",
+        success: function (result) {
+            if(result.code === 200) {
+                nums = result.extend.nums;
+                $("#curNum").attr('index', 0);
+                $("#curNum").attr('nums', nums);
+                showChart(1);
+            } else {
+                alert("获取学生失败");
+                location.reload();
+            }
+        }
+    });
+
+
+    // 图表显示
+    function showChart(type) {
+        var index = $("#curNum").attr('index');
+        var nums = $("#curNum").attr('nums');
+        index = parseInt(index)
+        nums = nums.split(',');
+
+        var text = $("#curNum").text();
+        if (text==null||text==undefined||text=="") {
+            index = 0;
+        } else {
+            if(type === 0) {
+                index = index - 1;
+                if (index < 0) index = nums.length - 1;
+            } else {
+                index = index + 1;
+                if (index >= nums.length) index = 0;
+            }
+
+        }
+
+        $("#curNum").attr('index', index);
+        $("#curNum").text("第"+index+"位");
+
+        var num = nums[index];
+
+
+        $.ajax({
+            url:"studentGrade/"+num,
+            type: "get",
+            success: function (result) {
+                var studentGrade = result.extend.studentGrade;
+
+                // 指定图表的配置项和数据
+                var option = {
+                    title: {
+                        text: '学生个人成绩',
+                        left: "left",
+                        subtext: '学号：'+ studentGrade.num + " 姓名：" + studentGrade.name
+                    },
+                    tooltip: {},
+                    legend: {
+                        data:['分数']
+                    },
+                    xAxis: {
+                        data: ["数学","Java","英语","体育","总成绩","平均成绩"]
+                    },
+                    yAxis: {},
+                    series: [{
+                        name: '分数',
+                        type: 'bar',
+                        data: [studentGrade.math, studentGrade.java, studentGrade.english, studentGrade.pe, studentGrade.total, studentGrade.average]
+                    }]
+                };
+
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+
+                var option = {
+                    tooltip: {},
+                    legend: {
+                        top: '5%',
+                        left: 'center'
+                    },
+                    series: [
+                        {
+                            name: " 姓名：" + studentGrade.name,
+                            type: 'pie',
+                            radius: ['40%', '70%'],
+                            avoidLabelOverlap: false,
+                            itemStyle: {
+                                borderRadius: 10,
+                                borderColor: '#fff',
+                                borderWidth: 2
+                            },
+                            label: {
+                                show: false,
+                                position: 'center'
+                            },
+                            emphasis: {
+                                label: {
+                                    show: true,
+                                    fontSize: '40',
+                                    fontWeight: 'bold'
+                                }
+                            },
+                            labelLine: {
+                                show: false
+                            },
+                            data: [
+                                { value: studentGrade.math, name: '数学' },
+                                { value: studentGrade.java, name: 'Java' },
+                                { value: studentGrade.english, name: '英语' },
+                                { value: studentGrade.pe, name: '体育' },
+                            ]
+                        }
+                    ]
+
+
+                };
+                myChart2.setOption(option);
+            }
+        })
+    }
+
+
+
+</script>
+
+</body>
+</html>

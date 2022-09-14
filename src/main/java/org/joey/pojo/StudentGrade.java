@@ -1,5 +1,7 @@
 package org.joey.pojo;
 
+import com.alibaba.excel.annotation.ExcelProperty;
+
 import java.math.BigDecimal;
 
 public class StudentGrade {
@@ -10,6 +12,8 @@ public class StudentGrade {
      *
      * @mbg.generated Wed Sep 07 10:28:19 CST 2022
      */
+
+    @ExcelProperty("学号")
     private Integer num;
 
     /**
@@ -19,6 +23,7 @@ public class StudentGrade {
      *
      * @mbg.generated Wed Sep 07 10:28:19 CST 2022
      */
+    @ExcelProperty("姓名")
     private String name;
 
     /**
@@ -28,6 +33,7 @@ public class StudentGrade {
      *
      * @mbg.generated Wed Sep 07 10:28:19 CST 2022
      */
+    @ExcelProperty("数学成绩")
     private BigDecimal math;
 
     /**
@@ -37,6 +43,7 @@ public class StudentGrade {
      *
      * @mbg.generated Wed Sep 07 10:28:19 CST 2022
      */
+    @ExcelProperty("Java成绩")
     private BigDecimal java;
 
     /**
@@ -46,6 +53,7 @@ public class StudentGrade {
      *
      * @mbg.generated Wed Sep 07 10:28:19 CST 2022
      */
+    @ExcelProperty("英语成绩")
     private BigDecimal english;
 
     /**
@@ -55,6 +63,7 @@ public class StudentGrade {
      *
      * @mbg.generated Wed Sep 07 10:28:19 CST 2022
      */
+    @ExcelProperty("体育成绩")
     private BigDecimal pe;
 
     /**
@@ -64,6 +73,7 @@ public class StudentGrade {
      *
      * @mbg.generated Wed Sep 07 10:28:19 CST 2022
      */
+    @ExcelProperty("总成绩")
     private BigDecimal total;
 
     /**
@@ -73,6 +83,7 @@ public class StudentGrade {
      *
      * @mbg.generated Wed Sep 07 10:28:19 CST 2022
      */
+    @ExcelProperty("平均成绩")
     private BigDecimal average;
 
     /**

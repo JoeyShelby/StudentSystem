@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments::head}"></head>
+
+<body>
+<div class="dashboard-main-wrapper">
+    <div th:insert="fragments::headbar"></div>
+    <div th:insert="fragments::sidebar"></div>
+    <div class="dashboard-wrapper">
+
+            <div class="dashboard-ecommerce">
+                <div class="container-fluid dashboard-content ">
+                    <div class="ecommerce-widget">
+                        <form id="addStuForm" onsubmit="return addStudent();">
+                        <div class="form-group col-auto">
+                            <label for="name">姓名</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="在此输入学生姓名">
+                        </div>
+                        <div class="form-group col-auto">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="male" value="male" name="sex" required checked="checked">
+                                <label class="custom-control-label" for="male">男</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="female" value="female" name="sex" required>
+                                <label class="custom-control-label" for="female">女</label>
+                            </div>
+                        </div>
+                        <div class="form-group col-auto">
+                            <label for="name">生日</label>
+                            <input type="text" class="form-control" id="birth" name="birth" placeholder="yyyy-MM-dd">
+                        </div>
+                        <div class="form-group col-auto">
+                            <button type="submit" class="btn btn-primary">添加</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        <div th:insert="fragments::footer"></div>
+    </div>
+</div>
+
+</body>
+
+<script type="text/javascript">
+function addStudent() {
+    let data = $("#addStuForm").serialize();
+    console.log(data)
+
+    $.ajax({
+        url: 'student',
+        type: 'POST',
+        data: data,
+        success: function (result) {
+            if(result.code === 200) {
+                alert("添加新学生成功");
+                location.reload();
+            }
+            else alert("添加失败");
+        }
+    });
+
+
+    return false;
+}
+
+</script>
+</html>

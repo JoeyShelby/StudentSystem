@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments::head}"></head>
+
+<body>
+<div class="dashboard-main-wrapper">
+    <div th:insert="fragments::headbar"></div>
+    <div th:insert="fragments::sidebar"></div>
+    <div class="dashboard-wrapper">
+        <div class="dashboard-ecommerce">
+            <div class="container-fluid dashboard-content ">
+                <div class="ecommerce-widget">
+                    <div class="row">
+
+                        <button type="button" class="btn btn-primary btn-lg btn-block" onclick="window.location.href='downClassGrade'">下载班级成绩报表</button>
+                        <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="window.location.href='downStudentGrade'">下载个人成绩报表</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:insert="fragments::footer"></div>
+    </div>
+</div>
+</body>
+</html>

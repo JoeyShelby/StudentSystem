@@ -12,6 +12,13 @@
     <result column="sex" jdbcType="VARCHAR" property="sex" />
     <result column="birth" jdbcType="VARCHAR" property="birth" />
   </resultMap>
+
+
+<!--  List<Grade> selectStudentsDoNotHaveGrade() ;-->
+  <select id="selectStudentsDoNotHaveGrade" resultType="org.joey.pojo.Student">
+    select * from grade.student where num not in (select num from grade.student_grade);
+  </select>
+
   <sql id="Example_Where_Clause">
     <!--
       WARNING - @mbg.generated

@@ -1,5 +1,7 @@
 package org.joey.pojo;
 
+import com.alibaba.excel.annotation.ExcelProperty;
+
 import java.math.BigDecimal;
 
 public class Grade {
@@ -10,6 +12,7 @@ public class Grade {
      *
      * @mbg.generated Wed Sep 07 10:28:19 CST 2022
      */
+    @ExcelProperty("数学总分")
     private BigDecimal mathTotal;
 
     /**
@@ -19,6 +22,7 @@ public class Grade {
      *
      * @mbg.generated Wed Sep 07 10:28:19 CST 2022
      */
+    @ExcelProperty("Java总分")
     private BigDecimal javaTotal;
 
     /**
@@ -28,6 +32,7 @@ public class Grade {
      *
      * @mbg.generated Wed Sep 07 10:28:19 CST 2022
      */
+    @ExcelProperty("英语总分")
     private BigDecimal englishTotal;
 
     /**
@@ -37,6 +42,7 @@ public class Grade {
      *
      * @mbg.generated Wed Sep 07 10:28:19 CST 2022
      */
+    @ExcelProperty("体育总分")
     private BigDecimal peTotal;
 
     /**
@@ -46,6 +52,7 @@ public class Grade {
      *
      * @mbg.generated Wed Sep 07 10:28:19 CST 2022
      */
+    @ExcelProperty("数学平均分")
     private BigDecimal mathAverage;
 
     /**
@@ -55,6 +62,7 @@ public class Grade {
      *
      * @mbg.generated Wed Sep 07 10:28:19 CST 2022
      */
+    @ExcelProperty("Java平均分")
     private BigDecimal javaAverage;
 
     /**
@@ -64,6 +72,7 @@ public class Grade {
      *
      * @mbg.generated Wed Sep 07 10:28:19 CST 2022
      */
+    @ExcelProperty("英语平均分")
     private BigDecimal englishAverage;
 
     /**
@@ -73,6 +82,7 @@ public class Grade {
      *
      * @mbg.generated Wed Sep 07 10:28:19 CST 2022
      */
+    @ExcelProperty("体育平均分")
     private BigDecimal peAverage;
 
     /**
@@ -82,6 +92,7 @@ public class Grade {
      *
      * @mbg.generated Wed Sep 07 10:28:19 CST 2022
      */
+    @ExcelProperty("总分")
     private BigDecimal total;
 
     /**
@@ -91,6 +102,7 @@ public class Grade {
      *
      * @mbg.generated Wed Sep 07 10:28:19 CST 2022
      */
+    @ExcelProperty("总分平均分")
     private BigDecimal totalAverage;
 
     /**
